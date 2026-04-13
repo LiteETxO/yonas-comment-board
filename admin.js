@@ -4,7 +4,7 @@
 
 const STORAGE_KEY = 'commentBoard_comments';
 const TRUSTED_KEY = 'commentBoard_trustedUsers';
-const ADMIN_PASSWORD = 'UNstaff2024!'; // Change this to your desired password
+const ADMIN_PASSWORD = 'admin123'; // Temporary simple password for testing
 const SESSION_KEY = 'admin_session';
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -73,12 +73,14 @@ function logout() {
 function checkPassword() {
   const input = document.getElementById('admin-password');
   const error = document.getElementById('login-error');
+  const enteredPassword = input.value.trim();
   
-  console.log('Entered:', input.value);
-  console.log('Expected:', ADMIN_PASSWORD);
-  console.log('Match:', input.value === ADMIN_PASSWORD);
+  console.log('Entered: "' + enteredPassword + '"');
+  console.log('Expected: "' + ADMIN_PASSWORD + '"');
+  console.log('Match:', enteredPassword === ADMIN_PASSWORD);
   
-  if (input.value === ADMIN_PASSWORD) {
+  if (enteredPassword === ADMIN_PASSWORD) {
+    error.style.display = 'none';
     login();
   } else {
     error.style.display = 'block';
