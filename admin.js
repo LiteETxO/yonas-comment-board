@@ -4,6 +4,8 @@
 
 const STORAGE_KEY = 'commentBoard_comments';
 const TRUSTED_KEY = 'commentBoard_trustedUsers';
+const ADMIN_PASSWORD = 'UNstaff2024!'; // Change this to your desired password
+const SESSION_KEY = 'admin_session';
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -48,6 +50,51 @@ function addTrustedUser(email) {
 function removeTrustedUser(email) {
   const users = getTrustedUsers().filter(u => u !== email.toLowerCase().trim());
   saveTrustedUsers(users);
+}
+
+// ── Login / Session Management ────────────────────────────────
+
+function isLoggedIn() {
+  return sessionStorage.getItem(SESSION_KEY) === 'true';
+}
+
+function login() {
+  sessionStorage.setItem(SESSION_KEY, 'true');
+  document.getElementById('login-overlay').style.display = 'none';
+  render();
+  renderTrustedUsers();
+}
+
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+
+function checkPassword() {
+  const input = document.getElementById('admin-password');
+  const error = document.getElementById('login-error');
+  
+  if (input.value === ADMIN_PASSWORD) {
+    login();
+  } else {
+    error.style.display = 'block';
+    input.value = '';
+    input.focus();
+  }
+}
+
+function initLogin() {
+  // Check if already logged in
+  if (isLoggedIn()) {
+    document.getElementById('login-overlay').style.display = 'none';
+    return;
+  }
+  
+  // Handle Enter key on password field
+  document.getElementById('admin-password').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') checkPassword();
+  });
+}
 }
 
 function formatDate(isoString) {
@@ -385,9 +432,13 @@ window.addEventListener('storage', (e) => {
 // ── Boot ──────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTabs();
-  initBulkActions();
-  initTrustedUsersForm();
-  render();
-  renderTrustedUsers();
+  initLogin();
+  
+  if (isLoggedIn()) {
+    initTabs();
+    initBulkActions();
+    initTrustedUsersForm();
+    render();
+    renderTrustedUsers();
+  }
 });

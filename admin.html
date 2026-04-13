@@ -239,6 +239,54 @@
       font-weight: 600;
     }
 
+    /* Login overlay */
+    .login-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(30, 31, 38, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .login-box {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .login-box h2 {
+      margin-bottom: .5rem;
+      color: var(--text);
+    }
+    .login-box p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: .9rem;
+    }
+    .login-box input {
+      width: 100%;
+      padding: .75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .login-box button {
+      width: 100%;
+      padding: .75rem;
+      font-size: 1rem;
+    }
+    .login-error {
+      color: var(--danger);
+      font-size: .85rem;
+      margin-top: .75rem;
+      display: none;
+    }
+
     /* Bulk actions */
     .bulk-bar {
       display: flex;
@@ -258,6 +306,17 @@
 </head>
 <body>
 
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-box">
+      <h2>&#128274; Admin Access</h2>
+      <p>Enter the admin password to access the moderation dashboard.</p>
+      <input type="password" id="admin-password" placeholder="Enter password" />
+      <button class="btn btn-primary" onclick="checkPassword()">Access Dashboard</button>
+      <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
+    </div>
+  </div>
+
   <div class="admin-bar">
     &#128274; <strong>Admin Panel</strong> — Comment Moderation Dashboard
   </div>
@@ -271,6 +330,7 @@
       </a>
       <nav class="header-nav">
         <a href="index.html">&#8592; Public Page</a>
+        <a href="#" onclick="logout(); return false;" style="color:var(--danger)">Logout</a>
       </nav>
     </div>
   </header>
