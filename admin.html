@@ -160,6 +160,85 @@
     .stat-card.approved .stat-num { color: var(--success); }
     .stat-card.rejected .stat-num { color: var(--danger);  }
 
+    /* Trusted users section */
+    .trusted-users-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .trusted-users-section h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      color: var(--text);
+    }
+    .trusted-users-section p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .trusted-user-form {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .trusted-user-form input {
+      flex: 1;
+      padding: .6rem .9rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: .9rem;
+    }
+    .trusted-users-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .trusted-user-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+      padding: .6rem .9rem;
+      border-radius: 6px;
+      font-size: .9rem;
+    }
+    .badge-trusted {
+      background: #fef3c7;
+      color: #92400e;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-pending {
+      background: #fef3c7;
+      color: #92400e;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-approved {
+      background: #dcfce7;
+      color: #166534;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-rejected {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+
     /* Bulk actions */
     .bulk-bar {
       display: flex;
@@ -253,6 +332,21 @@
     <!-- Comment list -->
     <div id="admin-comment-list">
       <!-- injected by admin.js -->
+    </div>
+
+    <!-- Trusted Users Section -->
+    <div class="trusted-users-section">
+      <h3>&#11088; Trusted Users</h3>
+      <p>Once you verify a staff member, add their email here. Their future posts will be auto-approved.</p>
+      
+      <form class="trusted-user-form" id="add-trusted-form">
+        <input type="email" id="trusted-email" placeholder="staff@un.org" required />
+        <button type="submit" class="btn btn-primary" style="padding:.6rem 1.2rem;">Add Trusted User</button>
+      </form>
+      
+      <div class="trusted-users-list" id="trusted-users-list">
+        <!-- injected by admin.js -->
+      </div>
     </div>
 
   </main>

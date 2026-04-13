@@ -3,6 +3,7 @@
    ============================================================ */
 
 const STORAGE_KEY = 'commentBoard_comments';
+const TRUSTED_KEY = 'commentBoard_trustedUsers';
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -16,6 +17,37 @@ function getComments() {
 
 function saveComments(comments) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
+}
+
+function getTrustedUsers() {
+  try {
+    return JSON.parse(localStorage.getItem(TRUSTED_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveTrustedUsers(users) {
+  localStorage.setItem(TRUSTED_KEY, JSON.stringify(users));
+}
+
+function isTrustedUser(email) {
+  if (!email) return false;
+  return getTrustedUsers().includes(email.toLowerCase().trim());
+}
+
+function addTrustedUser(email) {
+  const users = getTrustedUsers();
+  const normalized = email.toLowerCase().trim();
+  if (!users.includes(normalized)) {
+    users.push(normalized);
+    saveTrustedUsers(users);
+  }
+}
+
+function removeTrustedUser(email) {
+  const users = getTrustedUsers().filter(u => u !== email.toLowerCase().trim());
+  saveTrustedUsers(users);
 }
 
 function formatDate(isoString) {
@@ -74,6 +106,49 @@ function updateStats(comments) {
   document.getElementById('tab-count-all').textContent      = counts.all;
 }
 
+// ── Trusted Users Management ─────────────────────────────────
+
+function renderTrustedUsers() {
+  const container = document.getElementById('trusted-users-list');
+  const users = getTrustedUsers();
+  
+  if (users.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);font-size:.9rem;">No trusted users yet.</p>';
+    return;
+  }
+  
+  container.innerHTML = users.map(email => `
+    <div class="trusted-user-item">
+      <span>${escapeHtml(email)}</span>
+      <button class="btn btn-ghost" onclick="removeTrustedUserAndRender('${escapeHtml(email)}')" style="font-size:.75rem;padding:.3rem .6rem;">Remove</button>
+    </div>
+  `).join('');
+}
+
+function removeTrustedUserAndRender(email) {
+  removeTrustedUser(email);
+  renderTrustedUsers();
+  showToast('Trusted user removed.', 'info');
+}
+
+function initTrustedUsersForm() {
+  const form = document.getElementById('add-trusted-form');
+  const input = document.getElementById('trusted-email');
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = input.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showToast('Please enter a valid email.', 'error');
+      return;
+    }
+    addTrustedUser(email);
+    input.value = '';
+    renderTrustedUsers();
+    showToast('Trusted user added! Their future posts will be auto-approved.', 'success');
+  });
+}
+
 // ── Single comment actions ────────────────────────────────────
 
 function approveComment(id) {
@@ -116,6 +191,13 @@ function restoreComment(id) {
   saveComments(comments);
   showToast('Comment restored to pending.', 'info');
   render();
+}
+
+function trustUser(email) {
+  if (!email) return;
+  addTrustedUser(email);
+  renderTrustedUsers();
+  showToast(`Added to trusted users: ${email}`, 'success');
 }
 
 // ── Bulk actions ──────────────────────────────────────────────
@@ -162,10 +244,13 @@ function clearRejected() {
 
 function buildCommentCard(c) {
   const statusBadge = {
-    pending:  '<span class="badge badge-pending">Pending</span>',
+    pending:  '<span class="badge badge-pending">Pending Review</span>',
     approved: '<span class="badge badge-approved">Approved</span>',
     rejected: '<span class="badge badge-rejected">Rejected</span>',
   }[c.status] || '';
+
+  const trusted = c.email && isTrustedUser(c.email);
+  const trustedBadge = trusted ? '<span class="badge badge-trusted">&#11088; Trusted</span>' : '';
 
   const approveBtn = c.status !== 'approved'
     ? `<button class="btn btn-success" onclick="approveComment('${c.id}')" style="font-size:.82rem;padding:.45rem .9rem">&#10003; Approve</button>`
@@ -181,17 +266,22 @@ function buildCommentCard(c) {
 
   const deleteBtn = `<button class="btn btn-ghost" onclick="deleteComment('${c.id}')" style="font-size:.82rem;padding:.45rem .9rem;color:var(--danger);border-color:var(--danger-bg)">&#128465; Delete</button>`;
 
+  const trustBtn = (c.email && !trusted)
+    ? `<button class="btn btn-primary" onclick="trustUser('${escapeHtml(c.email)}')" style="font-size:.82rem;padding:.45rem .9rem">&#11088; Trust This User</button>`
+    : '';
+
   const timestamp = formatDate(c.createdAt);
 
   return `
     <div class="admin-comment-card status-${c.status}" id="card-${escapeHtml(c.id)}">
       <div class="admin-meta">
         <div class="admin-author-info">
-          <div class="admin-author-name">${escapeHtml(c.name)}</div>
-          <div class="admin-author-email">${escapeHtml(c.email)}</div>
+          <div class="admin-author-name">${escapeHtml(c.name || 'Anonymous')}</div>
+          <div class="admin-author-email">${escapeHtml(c.email || 'No email provided')}</div>
         </div>
         <div class="admin-right">
           ${statusBadge}
+          ${trustedBadge}
           <div class="admin-date">${timestamp}</div>
         </div>
       </div>
@@ -199,6 +289,7 @@ function buildCommentCard(c) {
       <div class="admin-actions">
         ${approveBtn}
         ${rejectBtn}
+        ${trustBtn}
         ${restoreBtn}
         ${deleteBtn}
       </div>
@@ -296,5 +387,7 @@ window.addEventListener('storage', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initBulkActions();
+  initTrustedUsersForm();
   render();
+  renderTrustedUsers();
 });

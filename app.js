@@ -4,6 +4,7 @@
 
 const STORAGE_KEY = 'commentBoard_comments';
 const REACTIONS_KEY = 'commentBoard_reactions';
+const TRUSTED_KEY = 'commentBoard_trustedUsers';
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -29,6 +30,19 @@ function getReactions() {
 
 function saveReactions(reactions) {
   localStorage.setItem(REACTIONS_KEY, JSON.stringify(reactions));
+}
+
+function getTrustedUsers() {
+  try {
+    return JSON.parse(localStorage.getItem(TRUSTED_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function isTrustedUser(email) {
+  if (!email) return false;
+  return getTrustedUsers().includes(email.toLowerCase().trim());
 }
 
 function generateId() {
@@ -183,14 +197,18 @@ function initForm() {
       return;
     }
 
+    // Check if user is trusted
+    const trusted = email && isTrustedUser(email);
+    
     // Build comment object
     const comment = {
       id:        generateId(),
       name,
       email: email || null,
       message,
-      status:    'pending',
+      status:    trusted ? 'approved' : 'pending',
       createdAt: new Date().toISOString(),
+      approvedAt: trusted ? new Date().toISOString() : null,
     };
 
     const comments = getComments();
@@ -201,7 +219,17 @@ function initForm() {
     form.reset();
     charEl.textContent = '0 / 2000';
     submitBtn.disabled = true;
-    successEl.style.display = 'flex';
+    
+    // Show appropriate success message
+    if (trusted) {
+      successEl.innerHTML = '&#10003;&nbsp; Your voice has been shared and is now live! Thank you for contributing.';
+      successEl.style.display = 'flex';
+      // Refresh the list immediately to show the new comment
+      renderApprovedComments();
+    } else {
+      successEl.innerHTML = '&#10003;&nbsp; Your voice has been shared and is awaiting review. Thank you for speaking up!';
+      successEl.style.display = 'flex';
+    }
 
     setTimeout(() => {
       submitBtn.disabled = false;
