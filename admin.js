@@ -74,6 +74,10 @@ function checkPassword() {
   const input = document.getElementById('admin-password');
   const error = document.getElementById('login-error');
   
+  console.log('Entered:', input.value);
+  console.log('Expected:', ADMIN_PASSWORD);
+  console.log('Match:', input.value === ADMIN_PASSWORD);
+  
   if (input.value === ADMIN_PASSWORD) {
     login();
   } else {
