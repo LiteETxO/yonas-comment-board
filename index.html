@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comment Board</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Page-specific tweaks */
+    .hero {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: #fff;
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: .5rem;
+    }
+    .hero p {
+      opacity: .85;
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .moderation-note {
+      background: var(--warn-bg);
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      font-size: .85rem;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+    .btn-primary.full { width: 100%; justify-content: center; font-size: 1rem; padding: .75rem; }
+    #comment-count-label {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    #comment-count-label span {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <div class="logo-icon">&#128172;</div>
+        CommentBoard
+      </a>
+      <nav class="header-nav">
+        <a href="admin.html">Admin Panel</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Join the Conversation</h1>
+    <p>Share your thoughts. All comments are reviewed before appearing publicly.</p>
+  </div>
+
+  <!-- Main content -->
+  <main class="page-container">
+
+    <!-- Submit Form -->
+    <div class="card">
+      <h2 class="card-title">&#9997;&#65039; Leave a Comment</h2>
+
+      <div class="moderation-note">
+        &#9203; Comments are held for moderation and will appear once approved by an admin.
+      </div>
+
+      <!-- Success banner -->
+      <div class="submit-success" id="submit-success">
+        &#10003;&nbsp; Your comment has been submitted and is awaiting moderation. Thank you!
+      </div>
+
+      <form id="comment-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="name" placeholder="Your name" maxlength="60" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span style="color:var(--danger)">*</span></label>
+            <input type="email" id="email" placeholder="you@example.com" maxlength="120" required />
+            <div style="font-size:.78rem;color:var(--text-muted);margin-top:.25rem">
+              Never displayed publicly.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Comment <span style="color:var(--danger)">*</span></label>
+          <textarea id="message" placeholder="Write your comment here…" maxlength="1000" required></textarea>
+          <div class="char-counter" id="char-counter">0 / 1000</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary full" id="submit-btn">
+          Submit Comment
+        </button>
+      </form>
+    </div>
+
+    <!-- Approved comments -->
+    <div>
+      <h2 class="section-heading">Discussion</h2>
+      <p class="section-sub" id="comment-count-label">
+        <span id="count-num">0</span> approved comment(s)
+      </p>
+
+      <div class="comment-list" id="approved-comments">
+        <!-- injected by app.js -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

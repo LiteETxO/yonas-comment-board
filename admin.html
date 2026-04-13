@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Comment Board</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Admin-specific styles */
+    .admin-bar {
+      background: #1e1f26;
+      color: #e5e7eb;
+      padding: .5rem 1.5rem;
+      font-size: .8rem;
+      text-align: center;
+      letter-spacing: .03em;
+    }
+
+    .admin-bar strong { color: #a5b4fc; }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      gap: .35rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.75rem;
+      overflow-x: auto;
+      padding-bottom: 0;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: .65rem 1.1rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+      transition: color var(--transition), border-color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .tab-btn:hover { color: var(--text); }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-count {
+      background: var(--bg);
+      border-radius: 99px;
+      padding: .1rem .5rem;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .tab-btn.active .tab-count { background: #e0e7ff; color: var(--primary); }
+
+    /* Admin comment card */
+    .admin-comment-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1rem;
+    }
+
+    .admin-comment-card.status-pending  { border-left: 4px solid var(--warn);    }
+    .admin-comment-card.status-approved { border-left: 4px solid var(--success); }
+    .admin-comment-card.status-rejected { border-left: 4px solid var(--danger);  }
+
+    .admin-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: .75rem;
+    }
+
+    .admin-author-info { display: flex; flex-direction: column; gap: .15rem; }
+
+    .admin-author-name { font-weight: 700; font-size: .95rem; }
+
+    .admin-author-email {
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+
+    .admin-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: .35rem;
+      flex-shrink: 0;
+    }
+
+    .admin-date {
+      font-size: .78rem;
+      color: var(--text-muted);
+    }
+
+    .admin-body {
+      background: var(--bg);
+      border-radius: 6px;
+      padding: .85rem 1rem;
+      font-size: .92rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--text);
+      margin-bottom: .9rem;
+      line-height: 1.65;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: .25rem;
+      font-weight: 600;
+    }
+
+    .stat-card.pending  .stat-num { color: var(--warn);    }
+    .stat-card.approved .stat-num { color: var(--success); }
+    .stat-card.rejected .stat-num { color: var(--danger);  }
+
+    /* Bulk actions */
+    .bulk-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .9rem;
+      flex-wrap: wrap;
+      gap: .6rem;
+    }
+
+    .bulk-bar h3 { font-size: .95rem; font-weight: 700; color: var(--text); }
+
+    @media (max-width: 560px) {
+      .stats-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-bar">
+    &#128274; <strong>Admin Panel</strong> — Comment Moderation Dashboard
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <div class="logo-icon">&#128172;</div>
+        CommentBoard
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">&#8592; Public Page</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="page-container">
+
+    <h1 class="section-heading">Moderation Dashboard</h1>
+    <p class="section-sub">Review, approve, or reject submitted comments.</p>
+
+    <!-- Stats -->
+    <div class="stats-strip">
+      <div class="stat-card pending">
+        <div class="stat-num" id="stat-pending">0</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card approved">
+        <div class="stat-num" id="stat-approved">0</div>
+        <div class="stat-label">Approved</div>
+      </div>
+      <div class="stat-card rejected">
+        <div class="stat-num" id="stat-rejected">0</div>
+        <div class="stat-label">Rejected</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar" role="tablist">
+      <button class="tab-btn active" data-tab="pending" role="tab" aria-selected="true">
+        &#9203; Pending <span class="tab-count" id="tab-count-pending">0</span>
+      </button>
+      <button class="tab-btn" data-tab="approved" role="tab" aria-selected="false">
+        &#10003; Approved <span class="tab-count" id="tab-count-approved">0</span>
+      </button>
+      <button class="tab-btn" data-tab="rejected" role="tab" aria-selected="false">
+        &#10005; Rejected <span class="tab-count" id="tab-count-rejected">0</span>
+      </button>
+      <button class="tab-btn" data-tab="all" role="tab" aria-selected="false">
+        &#9776; All <span class="tab-count" id="tab-count-all">0</span>
+      </button>
+    </div>
+
+    <!-- Bulk action bar (only visible on pending tab) -->
+    <div class="bulk-bar" id="bulk-bar">
+      <h3 id="bulk-heading">Pending Comments</h3>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn btn-success" id="approve-all-btn" style="font-size:.82rem;padding:.45rem .9rem">
+          Approve All
+        </button>
+        <button class="btn btn-danger" id="reject-all-btn" style="font-size:.82rem;padding:.45rem .9rem">
+          Reject All
+        </button>
+        <button class="btn btn-ghost" id="clear-rejected-btn" style="font-size:.82rem;padding:.45rem .9rem">
+          Clear Rejected
+        </button>
+      </div>
+    </div>
+
+    <!-- Comment list -->
+    <div id="admin-comment-list">
+      <!-- injected by admin.js -->
+    </div>
+
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
