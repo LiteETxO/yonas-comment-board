@@ -3,34 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Voice to the Voiceless</title>
+  <title>Voice to the Voiceless - UN Staff Platform</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     /* Page-specific tweaks */
     .hero {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
       color: #fff;
-      padding: 3rem 1.5rem 2.5rem;
+      padding: 2rem 1.5rem 2.5rem;
       text-align: center;
     }
+    .hero-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: white;
+      padding: 8px;
+    }
     .hero h1 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-size: clamp(1.4rem, 4vw, 2rem);
       font-weight: 800;
       margin-bottom: .5rem;
     }
     .hero p {
-      opacity: .85;
+      opacity: .9;
       font-size: 1rem;
       max-width: 480px;
       margin: 0 auto;
     }
     .privacy-note {
-      background: #e0e7ff;
-      border: 1px solid #c7d2fe;
+      background: #dbeafe;
+      border: 1px solid #93c5fd;
       border-radius: 8px;
       padding: .75rem 1rem;
       font-size: .85rem;
-      color: #3730a3;
+      color: #1e40af;
       display: flex;
       align-items: center;
       gap: .5rem;
@@ -81,9 +89,94 @@
       border-color: var(--primary);
     }
     .reaction-btn.active {
-      background: #e0e7ff;
+      background: #dbeafe;
       border-color: var(--primary);
       color: var(--primary);
+    }
+    
+    /* Layout with sidebar */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    
+    @media (max-width: 900px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Sidebar sections */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .sidebar-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .sidebar-section h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    
+    .sidebar-section.rules h3 { color: #1e40af; border-color: #3b82f6; }
+    .sidebar-section.judgments h3 { color: #7c2d12; border-color: #ea580c; }
+    .sidebar-section.announcements h3 { color: #14532d; border-color: #16a34a; }
+    
+    .sidebar-item {
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    
+    .sidebar-item:last-child {
+      border-bottom: none;
+    }
+    
+    .sidebar-item-title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: .25rem;
+    }
+    
+    .sidebar-item-meta {
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+    
+    .sidebar-item.criticism {
+      background: #fef2f2;
+      padding: .75rem;
+      border-radius: 6px;
+      margin-bottom: .5rem;
+    }
+    
+    .criticism-tag {
+      display: inline-block;
+      background: #fecaca;
+      color: #991b1b;
+      font-size: .7rem;
+      padding: .15rem .4rem;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-bottom: .25rem;
     }
   </style>
 </head>
@@ -93,7 +186,7 @@
   <header class="site-header">
     <div class="header-inner">
       <a href="index.html" class="site-logo">
-        <div class="logo-icon">&#128227;</div>
+        <img src="logo.png" alt="Logo" style="width:40px;height:40px;border-radius:50%;margin-right:10px;">
         Voice to the Voiceless
       </a>
       <nav class="header-nav">
@@ -104,66 +197,132 @@
 
   <!-- Hero -->
   <div class="hero">
+    <img src="logo.png" alt="UN Voice Logo" class="hero-logo">
     <h1>Voice to the Voiceless</h1>
-    <p>A safe space to share experiences, concerns, and suggestions.</p>
+    <p>A safe space for UN staff worldwide to share experiences, concerns, and suggestions.</p>
   </div>
 
-  <!-- Main content -->
-  <main class="page-container">
+  <!-- Main Layout -->
+  <div class="main-layout">
+    
+    <!-- Left Column: Comment Form & Discussion -->
+    <div class="main-content">
+      <!-- Submit Form -->
+      <div class="card">
+        <h2 class="card-title">&#128172; Share Your Experience</h2>
 
-    <!-- Submit Form -->
-    <div class="card">
-      <h2 class="card-title">&#128172; Share Your Experience</h2>
+        <div class="privacy-note">
+          &#128275; Share anonymously or add your email for admin contact only. Your privacy is protected.
+        </div>
 
-      <div class="privacy-note">
-        &#128275; Share anonymously or add your email for admin contact only. Your privacy is protected.
-      </div>
+        <!-- Success banner -->
+        <div class="submit-success" id="submit-success">
+          &#10003;&nbsp; Your voice has been shared and is awaiting review. Thank you for speaking up!
+        </div>
 
-      <!-- Success banner -->
-      <div class="submit-success" id="submit-success">
-        &#10003;&nbsp; Your voice has been shared and is awaiting review. Thank you for speaking up!
-      </div>
-
-      <form id="comment-form" novalidate>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name <span class="optional-tag">(optional)</span></label>
-            <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
-          </div>
-          <div class="form-group">
-            <label for="email">Email <span class="optional-tag">(optional)</span></label>
-            <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
-            <div style="font-size:.78rem;color:var(--text-muted);margin-top:.25rem">
-              Private. Only admin can see this.
+        <form id="comment-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name <span class="optional-tag">(optional)</span></label>
+              <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email <span class="optional-tag">(optional)</span></label>
+              <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
+              <div style="font-size:.78rem;color:var(--text-muted);margin-top:.25rem">
+                Private. Only admin can see this.
+              </div>
             </div>
           </div>
+
+          <div class="form-group">
+            <label for="message">Your Story / Feedback <span style="color:var(--danger)">*</span></label>
+            <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
+            <div class="char-counter" id="char-counter">0 / 2000</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary full" id="submit-btn">
+            Share Your Voice
+          </button>
+        </form>
+      </div>
+
+      <!-- Approved comments -->
+      <div>
+        <h2 class="section-heading">Staff Voices</h2>
+        <p class="section-sub" id="comment-count-label">
+          <span id="count-num">0</span> shared experience(s)
+        </p>
+
+        <div class="comment-list" id="approved-comments">
+          <!-- injected by app.js -->
         </div>
-
-        <div class="form-group">
-          <label for="message">Your Story / Feedback <span style="color:var(--danger)">*</span></label>
-          <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
-          <div class="char-counter" id="char-counter">0 / 2000</div>
-        </div>
-
-        <button type="submit" class="btn btn-primary full" id="submit-btn">
-          Share Your Voice
-        </button>
-      </form>
-    </div>
-
-    <!-- Approved comments -->
-    <div>
-      <h2 class="section-heading">Staff Voices</h2>
-      <p class="section-sub" id="comment-count-label">
-        <span id="count-num">0</span> shared experience(s)
-      </p>
-
-      <div class="comment-list" id="approved-comments">
-        <!-- injected by app.js -->
       </div>
     </div>
-
-  </main>
+    
+    <!-- Right Column: Sidebar -->
+    <aside class="sidebar">
+      
+      <!-- Rules Section -->
+      <div class="sidebar-section rules">
+        <h3>&#128220; Rules & Guidelines</h3>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Be Respectful</div>
+          <div class="sidebar-item-meta">Treat all colleagues with dignity and respect</div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Protect Privacy</div>
+          <div class="sidebar-item-meta">Do not share confidential information</div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Constructive Feedback</div>
+          <div class="sidebar-item-meta">Focus on solutions, not just problems</div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">No Harassment</div>
+          <div class="sidebar-item-meta">Zero tolerance for bullying or discrimination</div>
+        </div>
+      </div>
+      
+      <!-- Announcements Section -->
+      <div class="sidebar-section announcements">
+        <h3>&#128226; Announcements</h3>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Platform Launch</div>
+          <div class="sidebar-item-meta">April 13, 2026 - Welcome to Voice to the Voiceless</div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Moderation Active</div>
+          <div class="sidebar-item-meta">All posts reviewed within 24 hours</div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Trusted User Program</div>
+          <div class="sidebar-item-meta">Verified staff get auto-approval</div>
+        </div>
+      </div>
+      
+      <!-- Judgments & Criticisms Section -->
+      <div class="sidebar-section judgments">
+        <h3>&#9878;&#65039; Judgments & Criticisms</h3>
+        <div class="sidebar-item criticism">
+          <span class="criticism-tag">Criticism</span>
+          <div class="sidebar-item-title">Response Time Concerns</div>
+          <div class="sidebar-item-meta">Staff report delays in HR responses</div>
+        </div>
+        <div class="sidebar-item criticism">
+          <span class="criticism-tag">Judgment</span>
+          <div class="sidebar-item-title">Transparency Review</div>
+          <div class="sidebar-item-meta">Ongoing review of decision-making processes</div>
+        </div>
+        <div class="sidebar-item">
+          <div class="sidebar-item-title">Submit Your Concern</div>
+          <div class="sidebar-item-meta">Use the main form to share criticisms</div>
+        </div>
+      </div>
+      
+    </aside>
+    
+  </div>
 
   <!-- Toast container -->
   <div id="toast-container"></div>
