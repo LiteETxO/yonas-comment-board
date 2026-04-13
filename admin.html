@@ -311,9 +311,10 @@
     <div class="login-box">
       <h2>&#128274; Admin Access</h2>
       <p>Enter the admin password to access the moderation dashboard.</p>
-      <input type="password" id="admin-password" placeholder="Enter password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-      <button type="button" class="btn btn-secondary" onclick="togglePasswordVisibility()" style="margin-bottom:1rem;font-size:.85rem;">👁 Show/Hide Password</button>
-      <button class="btn btn-primary" onclick="checkPassword()">Access Dashboard</button>
+      <form id="login-form" onsubmit="return false;">
+        <input type="text" id="admin-password" placeholder="Enter password" autocomplete="off" />
+        <button type="submit" class="btn btn-primary" id="login-btn">Access Dashboard</button>
+      </form>
       <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
     </div>
   </div>

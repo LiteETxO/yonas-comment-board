@@ -4,8 +4,8 @@
 
 const STORAGE_KEY = 'commentBoard_comments';
 const TRUSTED_KEY = 'commentBoard_trustedUsers';
-const ADMIN_PASSWORD = 'admin123'; // Temporary simple password for testing
 const SESSION_KEY = 'admin_session';
+const ADMIN_PASSWORD = 'admin123';
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -52,78 +52,6 @@ function removeTrustedUser(email) {
   saveTrustedUsers(users);
 }
 
-// ── Login / Session Management ────────────────────────────────
-
-function isLoggedIn() {
-  return sessionStorage.getItem(SESSION_KEY) === 'true';
-}
-
-function login() {
-  sessionStorage.setItem(SESSION_KEY, 'true');
-  document.getElementById('login-overlay').style.display = 'none';
-  render();
-  renderTrustedUsers();
-}
-
-function logout() {
-  sessionStorage.removeItem(SESSION_KEY);
-  location.reload();
-}
-
-function checkPassword() {
-  const input = document.getElementById('admin-password');
-  const error = document.getElementById('login-error');
-  
-  if (!input || !input.value) {
-    error.style.display = 'block';
-    return;
-  }
-  
-  const enteredPassword = String(input.value).trim();
-  
-  if (enteredPassword === ADMIN_PASSWORD) {
-    error.style.display = 'none';
-    login();
-  } else {
-    error.style.display = 'block';
-    input.value = '';
-    input.focus();
-  }
-}
-
-function initLogin() {
-  // Check if already logged in
-  if (isLoggedIn()) {
-    document.getElementById('login-overlay').style.display = 'none';
-    return;
-  }
-  
-  // Handle Enter key on password field
-  document.getElementById('admin-password').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') checkPassword();
-  });
-}
-
-function togglePasswordVisibility() {
-  const passwordInput = document.getElementById('admin-password');
-  const toggleBtn = document.querySelector('.toggle-password');
-  
-  console.log('Toggle clicked. Current type:', passwordInput.type);
-  
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-    toggleBtn.textContent = '🙈';
-    toggleBtn.title = 'Hide password';
-    console.log('Changed to text');
-  } else {
-    passwordInput.type = 'password';
-    toggleBtn.textContent = '👁';
-    toggleBtn.title = 'Show password';
-    console.log('Changed to password');
-  }
-}
-}
-
 function formatDate(isoString) {
   const d = new Date(isoString);
   return d.toLocaleDateString('en-US', {
@@ -154,6 +82,52 @@ function showToast(message, type = 'success') {
   toast.textContent = message;
   container.appendChild(toast);
   setTimeout(() => toast.remove(), 3200);
+}
+
+// ── Login / Session Management ────────────────────────────────
+
+function isLoggedIn() {
+  return sessionStorage.getItem(SESSION_KEY) === 'true';
+}
+
+function login() {
+  sessionStorage.setItem(SESSION_KEY, 'true');
+  document.getElementById('login-overlay').style.display = 'none';
+  initApp();
+}
+
+function logout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+
+function initLogin() {
+  // Check if already logged in
+  if (isLoggedIn()) {
+    document.getElementById('login-overlay').style.display = 'none';
+    initApp();
+    return;
+  }
+  
+  // Setup login form
+  const loginForm = document.getElementById('login-form');
+  const passwordInput = document.getElementById('admin-password');
+  const errorDiv = document.getElementById('login-error');
+  
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const entered = passwordInput.value;
+    
+    if (entered === ADMIN_PASSWORD) {
+      errorDiv.style.display = 'none';
+      login();
+    } else {
+      errorDiv.style.display = 'block';
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+  });
 }
 
 // ── Counts ────────────────────────────────────────────────────
@@ -456,16 +430,18 @@ window.addEventListener('storage', (e) => {
   if (e.key === STORAGE_KEY) render();
 });
 
+// ── Initialize App ────────────────────────────────────────────
+
+function initApp() {
+  initTabs();
+  initBulkActions();
+  initTrustedUsersForm();
+  render();
+  renderTrustedUsers();
+}
+
 // ── Boot ──────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
   initLogin();
-  
-  if (isLoggedIn()) {
-    initTabs();
-    initBulkActions();
-    initTrustedUsersForm();
-    render();
-    renderTrustedUsers();
-  }
 });
