@@ -104,14 +104,18 @@ function togglePasswordVisibility() {
   const passwordInput = document.getElementById('admin-password');
   const toggleBtn = document.querySelector('.toggle-password');
   
+  console.log('Toggle clicked. Current type:', passwordInput.type);
+  
   if (passwordInput.type === 'password') {
     passwordInput.type = 'text';
-    toggleBtn.innerHTML = '&#128065;&#65039;';
+    toggleBtn.textContent = '🙈';
     toggleBtn.title = 'Hide password';
+    console.log('Changed to text');
   } else {
     passwordInput.type = 'password';
-    toggleBtn.innerHTML = '&#128065;';
+    toggleBtn.textContent = '👁';
     toggleBtn.title = 'Show password';
+    console.log('Changed to password');
   }
 }
 }
