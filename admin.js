@@ -73,12 +73,13 @@ function logout() {
 function checkPassword() {
   const input = document.getElementById('admin-password');
   const error = document.getElementById('login-error');
-  const enteredPassword = input.value.trim();
   
-  // Debug for mobile
-  alert('You entered: [' + enteredPassword + ']');
-  alert('Expected: [' + ADMIN_PASSWORD + ']');
-  alert('Match: ' + (enteredPassword === ADMIN_PASSWORD));
+  if (!input || !input.value) {
+    error.style.display = 'block';
+    return;
+  }
+  
+  const enteredPassword = String(input.value).trim();
   
   if (enteredPassword === ADMIN_PASSWORD) {
     error.style.display = 'none';
