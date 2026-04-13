@@ -95,6 +95,21 @@ function initLogin() {
     if (e.key === 'Enter') checkPassword();
   });
 }
+
+function togglePasswordVisibility() {
+  const passwordInput = document.getElementById('admin-password');
+  const toggleBtn = document.querySelector('.toggle-password');
+  
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleBtn.innerHTML = '&#128065;&#65039;';
+    toggleBtn.title = 'Hide password';
+  } else {
+    passwordInput.type = 'password';
+    toggleBtn.innerHTML = '&#128065;';
+    toggleBtn.title = 'Show password';
+  }
+}
 }
 
 function formatDate(isoString) {

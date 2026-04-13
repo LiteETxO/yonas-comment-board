@@ -275,6 +275,29 @@
       margin-bottom: 1rem;
       font-size: 1rem;
     }
+    .password-wrapper {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .password-wrapper input {
+      margin-bottom: 0;
+      padding-right: 2.5rem;
+    }
+    .toggle-password {
+      position: absolute;
+      right: .75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0;
+      opacity: 0.6;
+    }
+    .toggle-password:hover {
+      opacity: 1;
+    }
     .login-box button {
       width: 100%;
       padding: .75rem;
@@ -311,7 +334,10 @@
     <div class="login-box">
       <h2>&#128274; Admin Access</h2>
       <p>Enter the admin password to access the moderation dashboard.</p>
-      <input type="password" id="admin-password" placeholder="Enter password" />
+      <div class="password-wrapper">
+        <input type="password" id="admin-password" placeholder="Enter password" />
+        <button type="button" class="toggle-password" onclick="togglePasswordVisibility()" title="Show/Hide password">&#128065;</button>
+      </div>
       <button class="btn btn-primary" onclick="checkPassword()">Access Dashboard</button>
       <div class="login-error" id="login-error">Incorrect password. Please try again.</div>
     </div>
