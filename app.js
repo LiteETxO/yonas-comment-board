@@ -3,6 +3,7 @@
    ============================================================ */
 
 const STORAGE_KEY = 'commentBoard_comments';
+const REACTIONS_KEY = 'commentBoard_reactions';
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -18,6 +19,18 @@ function saveComments(comments) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
 }
 
+function getReactions() {
+  try {
+    return JSON.parse(localStorage.getItem(REACTIONS_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveReactions(reactions) {
+  localStorage.setItem(REACTIONS_KEY, JSON.stringify(reactions));
+}
+
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 }
@@ -31,6 +44,7 @@ function formatDate(isoString) {
 }
 
 function getInitials(name) {
+  if (!name || name.trim() === '') return '?';
   return name
     .split(' ')
     .slice(0, 2)
@@ -58,6 +72,33 @@ function showToast(message, type = 'success') {
   setTimeout(() => toast.remove(), 3200);
 }
 
+// ── Reactions ─────────────────────────────────────────────────
+
+function toggleReaction(commentId, emoji) {
+  const reactions = getReactions();
+  if (!reactions[commentId]) reactions[commentId] = {};
+  
+  if (reactions[commentId][emoji]) {
+    delete reactions[commentId][emoji];
+  } else {
+    reactions[commentId][emoji] = true;
+  }
+  
+  saveReactions(reactions);
+  renderApprovedComments();
+}
+
+function getReactionCount(commentId, emoji) {
+  // In a real app, this would come from a server
+  // For demo, we generate consistent pseudo-counts based on comment ID
+  const hash = commentId.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+  return (hash % 5) + (getReactions()[commentId]?.[emoji] ? 1 : 0);
+}
+
+function hasUserReacted(commentId, emoji) {
+  return !!getReactions()[commentId]?.[emoji];
+}
+
 // ── Render approved comments ──────────────────────────────────
 
 function renderApprovedComments() {
@@ -71,7 +112,7 @@ function renderApprovedComments() {
     list.innerHTML = `
       <div class="empty-state">
         <div class="empty-icon">&#128172;</div>
-        <p>No approved comments yet. Be the first to start the conversation!</p>
+        <p>No voices shared yet. Be the first to speak up!</p>
       </div>`;
     return;
   }
@@ -79,18 +120,29 @@ function renderApprovedComments() {
   // Newest approved first
   const sorted = [...comments].sort((a, b) => new Date(b.approvedAt || b.createdAt) - new Date(a.approvedAt || a.createdAt));
 
-  list.innerHTML = sorted.map(c => `
+  list.innerHTML = sorted.map(c => {
+    const reactions = ['&#128077;', '&#10084;&#65039;', '&#128079;', '&#129309;']; // 👍 ❤️ 👏 🤝
+    const reactionHtml = reactions.map(emoji => {
+      const count = getReactionCount(c.id, emoji);
+      const active = hasUserReacted(c.id, emoji) ? 'active' : '';
+      return `<button class="reaction-btn ${active}" onclick="toggleReaction('${c.id}', '${emoji}')">${emoji} ${count}</button>`;
+    }).join('');
+    
+    return `
     <article class="comment-card">
       <div class="comment-meta">
-        <div class="comment-avatar">${escapeHtml(getInitials(c.name))}</div>
+        <div class="comment-avatar">${escapeHtml(getInitials(c.name || 'Anonymous'))}</div>
         <div>
-          <div class="comment-author">${escapeHtml(c.name)}</div>
+          <div class="comment-author">${escapeHtml(c.name || 'Anonymous')}</div>
         </div>
         <span class="comment-date">${formatDate(c.approvedAt || c.createdAt)}</span>
       </div>
       <div class="comment-body">${escapeHtml(c.message)}</div>
+      <div class="reactions">
+        ${reactionHtml}
+      </div>
     </article>
-  `).join('');
+  `}).join('');
 }
 
 // ── Form handling ─────────────────────────────────────────────
@@ -107,38 +159,26 @@ function initForm() {
   // Character counter
   messageEl.addEventListener('input', () => {
     const len = messageEl.value.length;
-    charEl.textContent = `${len} / 1000`;
-    charEl.classList.toggle('over', len > 1000);
+    charEl.textContent = `${len} / 2000`;
+    charEl.classList.toggle('over', len > 2000);
   });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const name    = nameEl.value.trim();
+    const name    = nameEl.value.trim() || 'Anonymous';
     const email   = emailEl.value.trim();
     const message = messageEl.value.trim();
 
     // Basic validation
-    if (!name) {
-      showToast('Please enter your name.', 'error');
-      nameEl.focus();
-      return;
-    }
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showToast('Please enter a valid email address.', 'error');
-      emailEl.focus();
-      return;
-    }
-
     if (!message) {
-      showToast('Please write a comment.', 'error');
+      showToast('Please share your experience.', 'error');
       messageEl.focus();
       return;
     }
 
-    if (message.length > 1000) {
-      showToast('Comment exceeds 1,000 characters.', 'error');
+    if (message.length > 2000) {
+      showToast('Message exceeds 2,000 characters.', 'error');
       messageEl.focus();
       return;
     }
@@ -147,7 +187,7 @@ function initForm() {
     const comment = {
       id:        generateId(),
       name,
-      email,
+      email: email || null,
       message,
       status:    'pending',
       createdAt: new Date().toISOString(),
@@ -159,7 +199,7 @@ function initForm() {
 
     // Reset form
     form.reset();
-    charEl.textContent = '0 / 1000';
+    charEl.textContent = '0 / 2000';
     submitBtn.disabled = true;
     successEl.style.display = 'flex';
 

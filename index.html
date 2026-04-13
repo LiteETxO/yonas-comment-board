@@ -24,13 +24,13 @@
       max-width: 480px;
       margin: 0 auto;
     }
-    .moderation-note {
-      background: var(--warn-bg);
-      border: 1px solid #fde68a;
+    .privacy-note {
+      background: #e0e7ff;
+      border: 1px solid #c7d2fe;
       border-radius: 8px;
       padding: .75rem 1rem;
       font-size: .85rem;
-      color: #92400e;
+      color: #3730a3;
       display: flex;
       align-items: center;
       gap: .5rem;
@@ -43,6 +43,46 @@
       font-weight: 600;
     }
     #comment-count-label span {
+      color: var(--primary);
+    }
+    .optional-tag {
+      color: var(--text-muted);
+      font-size: .8rem;
+      font-weight: 400;
+    }
+    .reply-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: .85rem;
+      cursor: pointer;
+      padding: 0;
+      margin-top: .5rem;
+    }
+    .reply-btn:hover {
+      text-decoration: underline;
+    }
+    .reactions {
+      display: flex;
+      gap: .5rem;
+      margin-top: .75rem;
+    }
+    .reaction-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: .35rem .75rem;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .15s ease;
+    }
+    .reaction-btn:hover {
+      background: var(--surface);
+      border-color: var(--primary);
+    }
+    .reaction-btn.active {
+      background: #e0e7ff;
+      border-color: var(--primary);
       color: var(--primary);
     }
   </style>
@@ -65,7 +105,7 @@
   <!-- Hero -->
   <div class="hero">
     <h1>Voice to the Voiceless</h1>
-    <p>Share your story. Every voice matters and will be heard.</p>
+    <p>A safe space to share experiences, concerns, and suggestions.</p>
   </div>
 
   <!-- Main content -->
@@ -73,49 +113,49 @@
 
     <!-- Submit Form -->
     <div class="card">
-      <h2 class="card-title">&#9997;&#65039; Leave a Comment</h2>
+      <h2 class="card-title">&#128172; Share Your Experience</h2>
 
-      <div class="moderation-note">
-        &#9203; Comments are held for moderation and will appear once approved by an admin.
+      <div class="privacy-note">
+        &#128275; Share anonymously or add your email for admin contact only. Your privacy is protected.
       </div>
 
       <!-- Success banner -->
       <div class="submit-success" id="submit-success">
-        &#10003;&nbsp; Your comment has been submitted and is awaiting moderation. Thank you!
+        &#10003;&nbsp; Your voice has been shared and is awaiting review. Thank you for speaking up!
       </div>
 
       <form id="comment-form" novalidate>
         <div class="form-row">
           <div class="form-group">
-            <label for="name">Name <span style="color:var(--danger)">*</span></label>
-            <input type="text" id="name" placeholder="Your name" maxlength="60" required />
+            <label for="name">Name <span class="optional-tag">(optional)</span></label>
+            <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
           </div>
           <div class="form-group">
-            <label for="email">Email <span style="color:var(--danger)">*</span></label>
-            <input type="email" id="email" placeholder="you@example.com" maxlength="120" required />
+            <label for="email">Email <span class="optional-tag">(optional)</span></label>
+            <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
             <div style="font-size:.78rem;color:var(--text-muted);margin-top:.25rem">
-              Never displayed publicly.
+              Private. Only admin can see this.
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="message">Comment <span style="color:var(--danger)">*</span></label>
-          <textarea id="message" placeholder="Write your comment here…" maxlength="1000" required></textarea>
-          <div class="char-counter" id="char-counter">0 / 1000</div>
+          <label for="message">Your Story / Feedback <span style="color:var(--danger)">*</span></label>
+          <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
+          <div class="char-counter" id="char-counter">0 / 2000</div>
         </div>
 
         <button type="submit" class="btn btn-primary full" id="submit-btn">
-          Submit Comment
+          Share Your Voice
         </button>
       </form>
     </div>
 
     <!-- Approved comments -->
     <div>
-      <h2 class="section-heading">Discussion</h2>
+      <h2 class="section-heading">Staff Voices</h2>
       <p class="section-sub" id="comment-count-label">
-        <span id="count-num">0</span> approved comment(s)
+        <span id="count-num">0</span> shared experience(s)
       </p>
 
       <div class="comment-list" id="approved-comments">
