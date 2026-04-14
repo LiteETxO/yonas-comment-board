@@ -120,8 +120,8 @@ body {
 }
 
 .logo-title {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--text);
   letter-spacing: -0.01em;
 }
@@ -205,8 +205,8 @@ body {
 }
 
 .hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 900;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
 }
@@ -300,8 +300,8 @@ body {
 }
 
 .card-title {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   color: var(--text);
   display: flex;
@@ -438,8 +438,8 @@ textarea {
 
 /* ── Section Headings ────────────────────────────────────── */
 .section-heading {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.75rem;
+  font-weight: 800;
   margin-bottom: .5rem;
 }
 
@@ -624,8 +624,8 @@ textarea {
 }
 
 .sidebar-section h3 {
-  font-size: .9rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -648,8 +648,8 @@ textarea {
 }
 
 .sidebar-item-title {
-  font-weight: 600;
-  font-size: .9rem;
+  font-weight: 700;
+  font-size: 1rem;
   margin-bottom: .25rem;
 }
 
