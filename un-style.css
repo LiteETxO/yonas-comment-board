@@ -183,7 +183,7 @@ body {
 }
 
 .un-logo-hero {
-  height: 100px;
+  height: 140px;
   width: auto;
   margin-bottom: 1.5rem;
   filter: brightness(0) invert(1);
@@ -212,7 +212,8 @@ body {
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
   opacity: .95;
   max-width: 600px;
   margin: 0 auto 2rem;
@@ -587,40 +588,42 @@ textarea {
 
 .whistleblower-badge {
   background: linear-gradient(135deg, #F3E8FF, #E9D5FF);
-  border: 2px solid #C084FC;
+  border: 3px solid #C084FC;
   border-radius: var(--radius);
-  padding: 1rem;
+  padding: 1.25rem;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: .75rem;
+  gap: 1rem;
 }
 
 .wb-icon {
-  font-size: 1.75rem;
+  font-size: 2.5rem;
   background: white;
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  box-shadow: 0 2px 8px rgba(147, 51, 234, 0.2);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
 }
 
 .wb-text {
   display: flex;
   flex-direction: column;
-  gap: .15rem;
+  gap: .25rem;
 }
 
 .wb-text strong {
   color: #7C3AED;
-  font-size: .95rem;
+  font-size: 1.1rem;
+  font-weight: 800;
 }
 
 .wb-text span {
   color: #6B7280;
-  font-size: .8rem;
+  font-size: .9rem;
+  font-weight: 600;
 }
 
 .sidebar-section h3 {
