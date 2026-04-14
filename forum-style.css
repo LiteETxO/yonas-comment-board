@@ -67,21 +67,26 @@ body {
 }
 
 .un-branding span {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 900;
   color: #FF0000;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   background: #FFD700;
-  padding: 0.5rem 1.25rem;
-  border: 3px solid #FF0000;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  padding: 0.6rem 1.5rem;
+  border: 4px solid #FF0000;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
   text-shadow: 
-    -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000,
-    0 0 10px rgba(255,0,0,0.8);
+    -3px -3px 0 #000,
+    3px -3px 0 #000,
+    -3px 3px 0 #000,
+    3px 3px 0 #000,
+    -3px 0 0 #000,
+    3px 0 0 #000,
+    0 -3px 0 #000,
+    0 3px 0 #000,
+    0 0 15px rgba(255,0,0,1);
+  -webkit-text-stroke: 2px #000;
 }
 
 .top-bar a {
