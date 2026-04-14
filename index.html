@@ -8,41 +8,160 @@
   <style>
     /* Page-specific tweaks */
     .hero {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4f46e5 75%, #7c3aed 100%);
       color: #fff;
-      padding: 2rem 1.5rem 2.5rem;
+      padding: 3rem 1.5rem 3.5rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 40%),
+                  radial-gradient(circle at 70% 80%, rgba(124,58,237,0.3) 0%, transparent 40%);
+      animation: heroShine 8s ease-in-out infinite;
+    }
+    @keyframes heroShine {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: .5rem 1rem;
+      border-radius: 99px;
+      font-size: .875rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
     }
     .hero-logo {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 1rem;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1.5rem;
       border-radius: 50%;
       background: white;
-      padding: 8px;
+      padding: 10px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-logo-fallback {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.3);
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 1;
     }
     .hero h1 {
-      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-size: clamp(1.8rem, 5vw, 2.75rem);
       font-weight: 800;
-      margin-bottom: .5rem;
+      margin-bottom: .75rem;
+      position: relative;
+      z-index: 1;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-    .hero p {
+    .hero-subtitle {
+      opacity: .95;
+      font-size: 1.1rem;
+      max-width: 540px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .hero-slogan {
+      margin-top: 1.5rem;
+      font-style: italic;
+      font-size: 1.1rem;
+      opacity: 0.95;
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      display: inline-block;
+      padding: .75rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .quote-mark {
+      color: rgba(255,255,255,0.6);
+      font-size: 1.3rem;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .25rem;
+    }
+    .hero-stat-num {
+      font-size: 1.5rem;
+      background: rgba(255,255,255,0.15);
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hero-stat-label {
+      font-size: .8rem;
       opacity: .9;
-      font-size: 1rem;
-      max-width: 480px;
-      margin: 0 auto;
+      font-weight: 500;
     }
     .privacy-note {
-      background: #dbeafe;
-      border: 1px solid #93c5fd;
-      border-radius: 8px;
-      padding: .75rem 1rem;
-      font-size: .85rem;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      border: 1.5px solid #93c5fd;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      font-size: .9rem;
       color: #1e40af;
       display: flex;
-      align-items: center;
-      gap: .5rem;
-      margin-bottom: 1.25rem;
+      align-items: flex-start;
+      gap: .75rem;
+      margin-bottom: 1.5rem;
+    }
+    .privacy-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .privacy-content {
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+    }
+    .privacy-content strong {
+      font-weight: 600;
+    }
+    .privacy-content span {
+      opacity: 0.9;
     }
     .btn-primary.full { width: 100%; justify-content: center; font-size: 1rem; padding: .75rem; }
     #comment-count-label {
@@ -77,21 +196,28 @@
     }
     .reaction-btn {
       background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: .35rem .75rem;
-      font-size: .85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 99px;
+      padding: .5rem 1rem;
+      font-size: .9rem;
       cursor: pointer;
-      transition: all .15s ease;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-weight: 500;
     }
     .reaction-btn:hover {
       background: var(--surface);
       border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
     }
     .reaction-btn.active {
-      background: #dbeafe;
+      background: linear-gradient(135deg, var(--primary-light), #e0e7ff);
       border-color: var(--primary);
       color: var(--primary);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
     }
     
     /* Layout with sidebar */
@@ -121,62 +247,86 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.25rem;
+      padding: 1.5rem;
       box-shadow: var(--shadow);
+      transition: all var(--transition);
+    }
+    
+    .sidebar-section:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
     }
     
     .sidebar-section h3 {
       font-size: 1rem;
       font-weight: 700;
-      margin-bottom: .75rem;
-      padding-bottom: .5rem;
+      margin-bottom: 1rem;
+      padding-bottom: .75rem;
       border-bottom: 2px solid var(--border);
       display: flex;
       align-items: center;
       gap: .5rem;
+      letter-spacing: -0.01em;
     }
     
-    .sidebar-section.rules h3 { color: #1e40af; border-color: #3b82f6; }
-    .sidebar-section.judgments h3 { color: #7c2d12; border-color: #ea580c; }
-    .sidebar-section.announcements h3 { color: #14532d; border-color: #16a34a; }
+    .sidebar-section.rules { border-top: 4px solid #3b82f6; }
+    .sidebar-section.rules h3 { color: #1e40af; border-color: #dbeafe; }
+    
+    .sidebar-section.judgments { border-top: 4px solid #ea580c; }
+    .sidebar-section.judgments h3 { color: #7c2d12; border-color: #fed7aa; }
+    
+    .sidebar-section.announcements { border-top: 4px solid #16a34a; }
+    .sidebar-section.announcements h3 { color: #14532d; border-color: #bbf7d0; }
     
     .sidebar-item {
-      padding: .75rem 0;
+      padding: .875rem 0;
       border-bottom: 1px solid var(--border);
       font-size: .9rem;
+      transition: all var(--transition);
     }
     
     .sidebar-item:last-child {
       border-bottom: none;
     }
     
+    .sidebar-item:hover {
+      padding-left: .5rem;
+    }
+    
     .sidebar-item-title {
       font-weight: 600;
       color: var(--text);
-      margin-bottom: .25rem;
+      margin-bottom: .35rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
     }
     
     .sidebar-item-meta {
       font-size: .8rem;
       color: var(--text-muted);
+      line-height: 1.5;
     }
     
     .sidebar-item.criticism {
-      background: #fef2f2;
-      padding: .75rem;
-      border-radius: 6px;
+      background: linear-gradient(135deg, #fef2f2, #fff5f5);
+      padding: .875rem;
+      border-radius: 8px;
       margin-bottom: .5rem;
+      border: 1px solid #fecaca;
     }
     
     .criticism-tag {
       display: inline-block;
-      background: #fecaca;
+      background: linear-gradient(135deg, #fecaca, #fee2e2);
       color: #991b1b;
       font-size: .7rem;
-      padding: .15rem .4rem;
-      border-radius: 4px;
+      padding: .2rem .5rem;
+      border-radius: 99px;
       font-weight: 600;
-      margin-bottom: .25rem;
+      margin-bottom: .35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
   </style>
 </head>
@@ -197,10 +347,30 @@
 
   <!-- Hero -->
   <div class="hero">
-    <img src="logo.png" alt="UN Voice Logo" class="hero-logo">
+    <div class="hero-badge">🌍 UN Staff Platform</div>
+    <img src="logo.png" alt="UN Voice Logo" class="hero-logo" onerror="this.style.display='none'">
+    <div class="hero-logo-fallback" id="hero-logo-fallback">🕊️</div>
     <h1>Voice to the Voiceless</h1>
-    <p>A safe space for UN staff worldwide to share experiences, concerns, and suggestions.</p>
-    <p style="margin-top: 1rem; font-style: italic; font-size: 0.95rem; opacity: 0.9;">"The next Secretary-General should be a woman"</p>
+    <p class="hero-subtitle">A safe space for UN staff worldwide to share experiences, concerns, and suggestions anonymously.</p>
+    <div class="hero-slogan">
+      <span class="quote-mark">"</span>
+      The next Secretary-General should be a woman
+      <span class="quote-mark">"</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">🛡️</span>
+        <span class="hero-stat-label">Anonymous</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">✓</span>
+        <span class="hero-stat-label">Moderated</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">🌐</span>
+        <span class="hero-stat-label">Global</span>
+      </div>
+    </div>
   </div>
 
   <!-- Main Layout -->
@@ -213,7 +383,11 @@
         <h2 class="card-title">&#128172; Share Your Experience</h2>
 
         <div class="privacy-note">
-          &#128275; Share anonymously or add your email for admin contact only. Your privacy is protected.
+          <span class="privacy-icon">🔒</span>
+          <div class="privacy-content">
+            <strong>Your privacy is protected</strong>
+            <span>Share anonymously or add your email for admin contact only. We never share your data.</span>
+          </div>
         </div>
 
         <!-- Success banner -->
