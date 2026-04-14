@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voice to the Voiceless - UN Staff Platform</title>
-  <link rel="stylesheet" href="un-forum-style.css" />
+  <link rel="stylesheet" href="forum-style.css" />
 </head>
 <body>
 
@@ -37,91 +37,78 @@
     </div>
   </header>
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-content">
-      <img src="https://www.un.org/sites/un2.un.org/files/2020/04/UN-Logo-Dark.png" alt="UN Logo" class="un-logo-hero">
-      <div class="hero-badge">🌍 Global • Anonymous • Secure</div>
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <div class="hero-banner-content">
+      <div class="hero-badge">UN Staff Platform</div>
       <h1>Voice to the Voiceless</h1>
       <p class="hero-subtitle">A safe, anonymous space for UN staff worldwide to share experiences, concerns, and suggestions without fear of retribution.</p>
       <div class="hero-slogan">
         "The next Secretary-General should be a woman"
       </div>
-      <div class="hero-features">
-        <div class="hero-feature">
-          <div class="hero-feature-icon">🛡️</div>
-          <span class="hero-feature-label">Anonymous</span>
-        </div>
-        <div class="hero-feature">
-          <div class="hero-feature-icon">✓</div>
-          <span class="hero-feature-label">Moderated</span>
-        </div>
-        <div class="hero-feature">
-          <div class="hero-feature-icon">🌐</div>
-          <span class="hero-feature-label">Global</span>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- Main Layout -->
-  <div class="main-layout" id="share">
+  <!-- Main Container -->
+  <div class="main-container" id="share">
     
-    <!-- Left Column: Comment Form & Discussion -->
+    <!-- Main Content -->
     <div class="main-content">
-      <!-- Submit Form -->
-      <div class="card">
-        <h2 class="card-title">💬 Share Your Experience</h2>
-
-        <div class="privacy-note">
-          <span class="privacy-icon">🔒</span>
-          <div class="privacy-content">
-            <strong>Your privacy is protected</strong>
-            <span>Share anonymously or add your email for admin contact only. We never share your data with third parties.</span>
-          </div>
-        </div>
-
-        <!-- Success banner -->
-        <div class="submit-success" id="submit-success">
-          ✓ Your voice has been shared and is awaiting review. Thank you for speaking up!
-        </div>
-
-        <form id="comment-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Name <span class="optional-tag">(optional)</span></label>
-              <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
+      
+      <!-- Share Form Section -->
+      <div class="content-section">
+        <h2 class="section-title">Share Your Experience</h2>
+        
+        <div class="card">
+          <div class="privacy-box">
+            <span class="privacy-icon">🔒</span>
+            <div class="privacy-content">
+              <strong>Your privacy is protected</strong>
+              <span>Share anonymously or add your email for admin contact only. We never share your data with third parties.</span>
             </div>
-            <div class="form-group">
-              <label for="email">Email <span class="optional-tag">(optional)</span></label>
-              <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
-              <div style="font-size:.8rem;color:var(--text-muted);margin-top:.35rem">
-                Private. Only admin can see this.
+          </div>
+
+          <!-- Success banner -->
+          <div class="submit-success" id="submit-success">
+            ✓ Your voice has been shared and is awaiting review. Thank you for speaking up!
+          </div>
+
+          <form id="comment-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name <span class="optional-tag">(optional)</span></label>
+                <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email <span class="optional-tag">(optional)</span></label>
+                <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
+                <div style="font-size:.85rem;color:var(--text-muted);margin-top:.35rem">
+                  Private. Only admin can see this.
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="message">Your Story / Feedback <span style="color:var(--danger)">*</span></label>
-            <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
-            <div class="char-counter" id="char-counter">0 / 2000</div>
-          </div>
+            <div class="form-group">
+              <label for="message">Your Story / Feedback <span style="color:var(--danger)">*</span></label>
+              <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
+              <div class="char-counter" id="char-counter">0 / 2000</div>
+            </div>
 
-          <button type="submit" class="btn btn-primary full" id="submit-btn">
-            Share Your Voice
-          </button>
-        </form>
+            <button type="submit" class="btn btn-primary full" id="submit-btn">
+              Share Your Voice
+            </button>
+          </form>
+        </div>
       </div>
 
-      <!-- Approved comments -->
-      <div id="voices">
-        <h2 class="section-heading">Staff Voices</h2>
-        <p class="section-sub" id="comment-count-label">
+      <!-- Staff Voices Section -->
+      <div class="content-section" id="voices">
+        <h2 class="section-title">Staff Voices</h2>
+        <p class="comments-count" id="comment-count-label">
           <span id="count-num">0</span> shared experience(s)
         </p>
 
         <div class="comment-list" id="approved-comments">
-          <!-- injected by app.js -->
           <div class="empty-state">
             <div class="empty-state-icon">💬</div>
             <p>No voices shared yet. Be the first to speak up!</p>
@@ -130,15 +117,12 @@
       </div>
     </div>
     
-    <!-- Right Column: Sidebar -->
+    <!-- Sidebar -->
     <aside class="sidebar">
       
-      <!-- Rules Section -->
-      <div class="sidebar-section rules">
-        <div class="sidebar-header">
-          <span>📋</span>
-          <h3>Rules & Guidelines</h3>
-        </div>
+      <!-- Rules Block -->
+      <div class="sidebar-block">
+        <div class="sidebar-header">Rules & Guidelines</div>
         <div class="sidebar-content">
           <div class="sidebar-item">
             <div class="sidebar-item-title">Be Respectful</div>
@@ -158,13 +142,10 @@
           </div>
         </div>
       </div>
-      
-      <!-- Announcements Section -->
-      <div class="sidebar-section announcements">
-        <div class="sidebar-header">
-          <span>📢</span>
-          <h3>Announcements</h3>
-        </div>
+
+      <!-- Announcements Block -->
+      <div class="sidebar-block success">
+        <div class="sidebar-header">Announcements</div>
         <div class="sidebar-content">
           <div class="sidebar-item">
             <div class="sidebar-item-title">Platform Launch</div>
@@ -180,44 +161,30 @@
           </div>
         </div>
       </div>
-      
-      <!-- Judgments & Criticisms Section -->
-      <div class="sidebar-section judgments">
-        <div class="sidebar-header">
-          <span>⚖️</span>
-          <h3>Judgments & Criticisms</h3>
-        </div>
+
+      <!-- Judgments Block -->
+      <div class="sidebar-block alert">
+        <div class="sidebar-header">Judgments & Criticisms</div>
         <div class="sidebar-content">
-          <div class="sidebar-item criticism">
-            <span class="criticism-tag">Criticism</span>
+          <div class="sidebar-item">
             <div class="sidebar-item-title">Response Time Concerns</div>
             <div class="sidebar-item-meta">Staff report delays in HR responses</div>
           </div>
-          <div class="sidebar-item criticism">
-            <span class="criticism-tag">Judgment</span>
+          <div class="sidebar-item">
             <div class="sidebar-item-title">Transparency Review</div>
             <div class="sidebar-item-meta">Ongoing review of decision-making processes</div>
-          </div>
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Submit Your Concern</div>
-            <div class="sidebar-item-meta">Use the main form to share criticisms</div>
           </div>
         </div>
       </div>
 
-      <!-- Whistleblower Protection Section -->
-      <div class="sidebar-section whistleblower">
-        <div class="sidebar-header">
-          <span>🛡️</span>
-          <h3>Whistleblower Protection</h3>
-        </div>
+      <!-- Whistleblower Block -->
+      <div class="sidebar-block purple">
+        <div class="sidebar-header">Whistleblower Protection</div>
         <div class="sidebar-content">
-          <div class="whistleblower-badge">
-            <div class="wb-icon">🔒</div>
-            <div class="wb-text">
-              <strong>Protected Disclosure</strong>
-              <span>Your identity is legally protected</span>
-            </div>
+          <div class="whistleblower-box">
+            <div class="whistleblower-icon">🛡️</div>
+            <strong>Protected Disclosure</strong>
+            <span>Your identity is legally protected under UN policy</span>
           </div>
           <div class="sidebar-item">
             <div class="sidebar-item-title">ST/SGB/201/9</div>
@@ -225,11 +192,11 @@
           </div>
           <div class="sidebar-item">
             <div class="sidebar-item-title">No Retaliation</div>
-            <div class="sidebar-item-meta">Zero tolerance for retaliation against whistleblowers</div>
+            <div class="sidebar-item-meta">Zero tolerance for retaliation</div>
           </div>
           <div class="sidebar-item">
-            <div class="sidebar-item-title">Confidential Hotline</div>
-            <div class="sidebar-item-meta">Ethics Office: +1-212-963-3333</div>
+            <div class="sidebar-item-title">Ethics Hotline</div>
+            <div class="sidebar-item-meta">+1-212-963-3333</div>
           </div>
         </div>
       </div>
@@ -241,8 +208,8 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <p>Voice to the Voiceless — A platform for UN staff to share anonymously.</p>
-      <p style="margin-top: .5rem; opacity: .7">Admin access available <a href="admin.html">here</a>.</p>
+      <p><strong>Voice to the Voiceless</strong> — A platform for UN staff to share anonymously.</p>
+      <p>Admin access available <a href="admin.html">here</a>.</p>
     </div>
   </footer>
 
