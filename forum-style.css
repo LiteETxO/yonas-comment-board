@@ -61,9 +61,17 @@ body {
 }
 
 .un-logo-small {
-  height: 50px;
+  height: 80px;
   width: auto;
   filter: brightness(0) invert(1);
+}
+
+.un-branding span {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #FF0000;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .top-bar a {
@@ -205,10 +213,24 @@ body {
   display: inline-block;
   background: rgba(255,255,255,0.95);
   color: var(--ohchr-blue);
-  padding: 1rem 2rem;
-  font-size: 1.4rem;
-  font-weight: 700;
+  padding: 1.25rem 2.5rem;
+  font-size: 1.6rem;
+  font-weight: 800;
   font-style: italic;
+  animation: flicker 1.5s ease-in-out infinite;
+  border: 3px solid #FFD700;
+}
+
+@keyframes flicker {
+  0%, 100% { 
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+  }
+  50% { 
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(255,215,0,0.9), 0 0 60px rgba(255,215,0,0.5);
+    border-color: #FFA500;
+  }
   animation: pulse 3s ease-in-out infinite;
 }
 
