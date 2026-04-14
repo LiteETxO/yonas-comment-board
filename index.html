@@ -4,16 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voice to the Voiceless - UN Staff Platform</title>
-  <link rel="stylesheet" href="forum-style.css" />
+  <link rel="stylesheet" href="advocacy-style.css" />
 </head>
 <body>
+
+  <!-- ALERT Banner -->
+  <div class="alert-banner">
+    <div class="alert-banner-inner">
+      <span class="alert-badge">⚠️ ALERT</span>
+      <span class="alert-text">How OIOS and Ethics Ignore Whistleblower Protections?</span>
+    </div>
+  </div>
 
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="top-bar-inner">
       <div class="un-branding">
         <img src="https://www.un.org/sites/un2.un.org/files/2020/04/UN-Logo-Dark.png" alt="UN Logo" class="un-logo-small">
-        <span>United Nations Staff Platform</span>
+        <span>🌍 United Nations Staff Platform</span>
       </div>
       <a href="admin.html">Admin Access</a>
     </div>
@@ -37,14 +45,19 @@
     </div>
   </header>
 
-  <!-- Hero Banner -->
-  <div class="hero-banner">
-    <div class="hero-banner-content">
-      <div class="hero-badge">UN Staff Platform</div>
-      <h1>Voice to the Voiceless</h1>
-      <p class="hero-subtitle">A safe, anonymous space for UN staff worldwide to share experiences, concerns, and suggestions without fear of retribution.</p>
-      <div class="hero-slogan">
-        "The next Secretary-General should be a woman"
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Whistleblowers reporting <span>misconduct</span> are left unprotected, ignored by OIOS and the Ethics Office</h1>
+        <p class="hero-subtitle">A safe, anonymous space for UN staff worldwide to share experiences, concerns, and suggestions without fear of retribution.</p>
+        <div class="hero-slogan">
+          "The next Secretary-General should be a woman"
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="un-whistleblower-policy.png" alt="UN Whistleblower Protection" style="width:100%;border-radius:8px;border:3px solid #DC2626;">
+        <div class="confidential-stamp">🔒 Confidential</div>
       </div>
     </div>
   </div>
@@ -56,55 +69,53 @@
     <div class="main-content">
       
       <!-- Share Form Section -->
-      <div class="content-section">
-        <h2 class="section-title">Share Your Experience</h2>
-        
-        <div class="card">
-          <div class="privacy-box">
-            <span class="privacy-icon">🔒</span>
-            <div class="privacy-content">
-              <strong>Your privacy is protected</strong>
-              <span>Share anonymously or add your email for admin contact only. We never share your data with third parties.</span>
-            </div>
+      <div class="card">
+        <h2 class="card-title">💬 Share Your Experience</h2>
+
+        <div class="privacy-box">
+          <span class="privacy-icon">🔒</span>
+          <div class="privacy-content">
+            <strong>Your identity is protected</strong>
+            <span>Share anonymously or add your email for admin contact only. We never share your data.</span>
           </div>
-
-          <!-- Success banner -->
-          <div class="submit-success" id="submit-success">
-            ✓ Your voice has been shared and is awaiting review. Thank you for speaking up!
-          </div>
-
-          <form id="comment-form" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Name <span class="optional-tag">(optional)</span></label>
-                <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
-              </div>
-              <div class="form-group">
-                <label for="email">Email <span class="optional-tag">(optional)</span></label>
-                <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
-                <div style="font-size:.85rem;color:var(--text-muted);margin-top:.35rem">
-                  Private. Only admin can see this.
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="message">Your Story / Feedback <span style="color:var(--danger)">*</span></label>
-              <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
-              <div class="char-counter" id="char-counter">0 / 2000</div>
-            </div>
-
-            <button type="submit" class="btn btn-primary full" id="submit-btn">
-              Share Your Voice
-            </button>
-          </form>
         </div>
+
+        <!-- Success banner -->
+        <div class="submit-success" id="submit-success">
+          ✓ Your voice has been shared and is awaiting review. Thank you for speaking up!
+        </div>
+
+        <form id="comment-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name <span class="optional-tag">(optional)</span></label>
+              <input type="text" id="name" placeholder="Anonymous or your name" maxlength="60" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email <span class="optional-tag">(optional)</span></label>
+              <input type="email" id="email" placeholder="For admin contact only" maxlength="120" />
+              <div style="font-size:.85rem;color:var(--text-muted);margin-top:.35rem">
+                Private. Only admin can see this.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your Story / Feedback <span style="color:#DC2626">*</span></label>
+            <textarea id="message" placeholder="How are you feeling? What's on your mind? Share your experience, concerns, or suggestions..." maxlength="2000" required></textarea>
+            <div class="char-counter" id="char-counter">0 / 2000</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary full" id="submit-btn">
+            Share Your Voice
+          </button>
+        </form>
       </div>
 
       <!-- Staff Voices Section -->
-      <div class="content-section" id="voices">
-        <h2 class="section-title">Staff Voices</h2>
-        <p class="comments-count" id="comment-count-label">
+      <div id="voices">
+        <h2 class="section-heading">Staff Voices</h2>
+        <p class="section-sub" id="comment-count-label">
           <span id="count-num">0</span> shared experience(s)
         </p>
 
@@ -120,68 +131,48 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       
+      <!-- Alert Block -->
+      <div class="sidebar-block alert">
+        <div class="sidebar-header">⚠️ The Problem</div>
+        <div class="sidebar-content">
+          <div class="sidebar-item">
+            <div class="sidebar-item-title">Reports Ignored</div>
+            <div class="sidebar-item-meta">Staff complaints left unanswered for months <span class="ignored-stamp">IGNORED</span></div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-title">No Protection</div>
+            <div class="sidebar-item-meta">Whistleblowers face retaliation without support</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-title">Broken System</div>
+            <div class="sidebar-item-meta">OIOS and Ethics Office failing staff</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Rules Block -->
-      <div class="sidebar-block">
-        <div class="sidebar-header">Rules & Guidelines</div>
+      <div class="sidebar-block info">
+        <div class="sidebar-header">📋 Rules & Guidelines</div>
         <div class="sidebar-content">
           <div class="sidebar-item">
             <div class="sidebar-item-title">Be Respectful</div>
-            <div class="sidebar-item-meta">Treat all colleagues with dignity and respect</div>
+            <div class="sidebar-item-meta">Treat all colleagues with dignity</div>
           </div>
           <div class="sidebar-item">
             <div class="sidebar-item-title">Protect Privacy</div>
             <div class="sidebar-item-meta">Do not share confidential information</div>
           </div>
           <div class="sidebar-item">
-            <div class="sidebar-item-title">Constructive Feedback</div>
-            <div class="sidebar-item-meta">Focus on solutions, not just problems</div>
-          </div>
-          <div class="sidebar-item">
             <div class="sidebar-item-title">No Harassment</div>
-            <div class="sidebar-item-meta">Zero tolerance for bullying or discrimination</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Announcements Block -->
-      <div class="sidebar-block success">
-        <div class="sidebar-header">Announcements</div>
-        <div class="sidebar-content">
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Platform Launch</div>
-            <div class="sidebar-item-meta">April 13, 2026 — Welcome to Voice to the Voiceless</div>
-          </div>
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Moderation Active</div>
-            <div class="sidebar-item-meta">All posts reviewed within 24 hours</div>
-          </div>
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Trusted User Program</div>
-            <div class="sidebar-item-meta">Verified staff get auto-approval</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Judgments Block -->
-      <div class="sidebar-block alert">
-        <div class="sidebar-header">Judgments & Criticisms</div>
-        <div class="sidebar-content">
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Response Time Concerns</div>
-            <div class="sidebar-item-meta">Staff report delays in HR responses</div>
-          </div>
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Transparency Review</div>
-            <div class="sidebar-item-meta">Ongoing review of decision-making processes</div>
+            <div class="sidebar-item-meta">Zero tolerance for bullying</div>
           </div>
         </div>
       </div>
 
       <!-- Whistleblower Block -->
-      <div class="sidebar-block purple">
+      <div class="sidebar-block gold">
         <div class="sidebar-header">🛡️ Whistleblower Protection</div>
         <div class="sidebar-content">
-          <img src="un-whistleblower-policy.png" alt="UN Whistleblower Protection Policy" style="width:100%;margin-bottom:1rem;border:2px solid #9C27B0;">
           <div class="whistleblower-box">
             <div class="whistleblower-icon">🔒</div>
             <strong>Protected Disclosure</strong>
@@ -189,19 +180,30 @@
           </div>
           <div class="sidebar-item">
             <div class="sidebar-item-title">ST/SGB/201/9</div>
-            <div class="sidebar-item-meta">UN Whistleblower Protection Policy — <strong>UN encourages staff to report misconduct</strong></div>
-          </div>
-          <div class="sidebar-item">
-            <div class="sidebar-item-title">Protection Guaranteed</div>
-            <div class="sidebar-item-meta">Confidentiality & anti-retaliation safeguards</div>
+            <div class="sidebar-item-meta">UN Whistleblower Protection Policy</div>
           </div>
           <div class="sidebar-item">
             <div class="sidebar-item-title">Ethics Office</div>
-            <div class="sidebar-item-meta">+1-212-963-3333 | ethics@un.org</div>
+            <div class="sidebar-item-meta">+1-212-963-3333</div>
           </div>
           <div class="sidebar-item">
             <div class="sidebar-item-title">OIOS Hotline</div>
-            <div class="sidebar-item-meta">+1-212-963-2677 | oios@un.org</div>
+            <div class="sidebar-item-meta">+1-212-963-2677</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Announcements Block -->
+      <div class="sidebar-block success">
+        <div class="sidebar-header">📢 Announcements</div>
+        <div class="sidebar-content">
+          <div class="sidebar-item">
+            <div class="sidebar-item-title">Platform Launch</div>
+            <div class="sidebar-item-meta">April 2026 — Voice to the Voiceless is live</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-title">Moderation Active</div>
+            <div class="sidebar-item-meta">All posts reviewed within 24 hours</div>
           </div>
         </div>
       </div>
@@ -214,7 +216,8 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p><strong>Voice to the Voiceless</strong> — A platform for UN staff to share anonymously.</p>
-      <p>Admin access available <a href="admin.html">here</a>.</p>
+      <p>We need a more effective whistleblower protection policy immediately.</p>
+      <p style="margin-top: 1rem;">Admin access available <a href="admin.html">here</a>.</p>
     </div>
   </footer>
 
