@@ -101,10 +101,27 @@
       padding: .75rem 1.5rem;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.2);
+      animation: sloganPulse 3s ease-in-out infinite;
+    }
+    @keyframes sloganPulse {
+      0%, 100% { 
+        opacity: 0.95;
+        box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      }
+      50% { 
+        opacity: 1;
+        box-shadow: 0 0 40px rgba(255,255,255,0.25), 0 0 60px rgba(124,58,237,0.2);
+        border-color: rgba(255,255,255,0.4);
+      }
     }
     .quote-mark {
       color: rgba(255,255,255,0.6);
       font-size: 1.3rem;
+      animation: quoteGlow 3s ease-in-out infinite;
+    }
+    @keyframes quoteGlow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
     }
     .hero-stats {
       display: flex;
